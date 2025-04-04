@@ -1,0 +1,4 @@
+﻿Operación Recompilar iniciada...
+1>------ Operación Recompilar todo iniciada: proyecto: SpreadWork, configuración: Debug Any CPU ------
+1>  SpreadWork -> C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\bin\Debug\SpreadWork.exe
+========== Recompilar todo: 1 correctos, 0 incorrectos, 0 omitidos ==========
