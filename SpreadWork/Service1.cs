@@ -48,8 +48,9 @@ namespace SpreadWork
             WriteLog("{0} ms elapsed.");
             // Captura imagen
 
+            /*
             Rectangle bounds = Screen.GetBounds(Point.Empty);
-            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height))
+            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb))
             {
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
@@ -57,6 +58,15 @@ namespace SpreadWork
                 }
                 bitmap.Save("test.jpg", ImageFormat.Jpeg);
             }
+            */
+            var screen = System.Windows.Forms.Screen.PrimaryScreen;
+            var rect = screen.Bounds;
+            var size = rect.Size;
+
+            Bitmap bmpScreenshot = new Bitmap(size.Width, size.Height);
+            Graphics g = Graphics.FromImage(bmpScreenshot);
+            g.CopyFromScreen(0, 0, 0, 0, size);
+            bmpScreenshot.Save("test.jpg", ImageFormat.Jpeg);
 
 
             // Inicializa Timer

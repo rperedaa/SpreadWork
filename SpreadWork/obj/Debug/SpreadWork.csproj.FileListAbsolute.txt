@@ -6,4 +6,3 @@ C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\obj\Debug\SpreadWork.csproj.
 C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\obj\Debug\SpreadWork.csproj.CoreCompileInputs.cache
 C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\obj\Debug\SpreadWork.exe
 C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\obj\Debug\SpreadWork.pdb
-C:\Users\Roberto\source\repos\SpreadWork\SpreadWork\obj\Debug\SpreadWork.csproj.AssemblyReference.cache
