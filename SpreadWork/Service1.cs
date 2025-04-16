@@ -19,7 +19,7 @@ namespace SpreadWork
 {
     public partial class Service1 : ServiceBase
     {
-        System.Timers.Timer Timer = new System.Timers.Timer();
+        System.Timers.Timer WatchDog = new System.Timers.Timer();
         int Interval = 10000;
 
         public Service1()
@@ -36,14 +36,14 @@ namespace SpreadWork
             // Service Code
             WriteLog("Servicio SpreadWorkService arrancado");
             // Ejecución períodica del servicio
-            Timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            Timer.Interval = Interval;
-            Timer.Enabled = true;
+            WatchDog.Elapsed += new ElapsedEventHandler(OnElapsedTime);
+            WatchDog.Interval = Interval;
+            WatchDog.Enabled = true;
         }
 
         private void OnElapsedTime(object sender, ElapsedEventArgs e)
         {
-            Timer.Enabled = false;
+            WatchDog.Enabled = false;
             // Escribe log
             WriteLog("{0} ms elapsed.");
             // Captura imagen
@@ -70,7 +70,7 @@ namespace SpreadWork
 
 
             // Inicializa Timer
-            Timer.Enabled = true;
+            WatchDog.Enabled = true;
         }
 
         private void WriteLog(string logMessage, bool addTimeStamp = true)
