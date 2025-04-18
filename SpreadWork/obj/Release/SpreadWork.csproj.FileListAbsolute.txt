@@ -1,0 +1,8 @@
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\bin\Release\SpreadWork.exe.config
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\bin\Release\SpreadWork.exe
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\bin\Release\SpreadWork.pdb
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\obj\Release\SpreadWork.ProjectInstaller.resources
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\obj\Release\SpreadWork.csproj.GenerateResource.cache
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\obj\Release\SpreadWork.csproj.CoreCompileInputs.cache
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\obj\Release\SpreadWork.exe
+C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\obj\Release\SpreadWork.pdb

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define SpreadWork_TargetDir=$(var.SpreadWork.TargetDir)?>
+	<Product Id="*" Name="SpreadWorkServiceInstaller" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="3b15084c-db68-4a0d-a6bd-33f0ef8b7e41">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="SpreadWorkServiceInstaller" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="SpreadWorkServiceInstaller" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+			<Component Id="SpreadWork.exe" Guid="888f0a3a-82cd-45e0-8e6f-d7c7ff6217b3">
+			  <File Id="SpreadWork.exe" Name="SpreadWork.exe" Source="$(var.SpreadWork_TargetDir)SpreadWork.exe" />
+			</Component>
+			<Component Id="SpreadWork.exe.config" Guid="3386eb0d-ad55-46c5-8521-146429c7f3ce">
+			  <File Id="SpreadWork.exe.config" Name="SpreadWork.exe.config" Source="$(var.SpreadWork_TargetDir)SpreadWork.exe.config" />
+			</Component>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

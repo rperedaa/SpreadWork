@@ -1,0 +1,36 @@
+[13:09:16] - Servicio SpreadWorkService arrancado[13:09:26] - 10000 ms elapsed.[13:09:29] - Programa SpreadWork no instalado.[13:11:50] - Servicio SpreadWorkService detenido[13:12:21] - Servicio SpreadWorkService arrancado[13:12:31] - 10000 ms elapsed.[13:12:31] - Programa SpreadWork no instalado.[13:13:51] - Servicio SpreadWorkService detenido[13:17:52] - Servicio SpreadWorkService arrancado[13:18:02] - 10000 ms elapsed.[13:18:02] - Programa SpreadWork no instalado.[13:18:35] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:18:48] - 10000 ms elapsed.[13:18:48] - Programa SpreadWork no instalado.[13:20:01] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:11] - 10000 ms elapsed.[13:20:11] - Programa SpreadWork no instalado.[13:20:11] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:21] - 10000 ms elapsed.[13:20:21] - Programa SpreadWork no instalado.[13:20:21] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:31] - 10000 ms elapsed.[13:20:31] - Programa SpreadWork no instalado.[13:20:34] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:44] - 10000 ms elapsed.[13:20:44] - Programa SpreadWork no instalado.[13:20:44] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:54] - 10000 ms elapsed.[13:20:54] - Programa SpreadWork no instalado.[13:20:54] - {0} exception in program copy: System.IO.IOException: No se ha encontrado la ruta de acceso de la red.
+
+   en System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   en System.IO.File.InternalCopy(String sourceFileName, String destFileName, Boolean overwrite, Boolean checkHost)
+   en System.IO.File.Copy(String sourceFileName, String destFileName, Boolean overwrite)
+   en SpreadWork.Service1.DownloadFile(String nombre) en C:\Users\roberto\Source\Repos\SpreadWork\SpreadWork\Service1.cs:línea 148[13:20:59] - Servicio SpreadWorkService detenido

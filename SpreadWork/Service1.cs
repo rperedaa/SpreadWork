@@ -1,31 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Runtime.InteropServices;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Drawing.Imaging;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.Threading;
+using System.Linq;
 
 namespace SpreadWork
 {
     public partial class Service1 : ServiceBase
     {
         System.Timers.Timer WatchDog = new System.Timers.Timer();
-        int Interval = 10000;
-
+        int Interval = 10000; // este valor no es necesario cambiarlo
+        private NameValueCollection cfgGlobal;
+        string RemotePath = "";
+        string LocalPath = "";
         public Service1()
         {
             InitializeComponent();
             this.ServiceName = "SpreadWorkService";
+            // Cargar Configuración
+            LoadProgramConfig();
+            SetProgramConfig();
         }
 
         protected override void OnStart(string[] args)
@@ -33,7 +33,7 @@ namespace SpreadWork
             #if DEBUG
             System.Diagnostics.Debugger.Launch();
             #endif
-            // Service Code
+            // Log
             WriteLog("Servicio SpreadWorkService arrancado");
             // Ejecución períodica del servicio
             WatchDog.Elapsed += new ElapsedEventHandler(OnElapsedTime);
@@ -45,29 +45,36 @@ namespace SpreadWork
         {
             WatchDog.Enabled = false;
             // Escribe log
-            WriteLog("{0} ms elapsed.");
-            // Captura imagen
-
-            /*
-            Rectangle bounds = Screen.GetBounds(Point.Empty);
-            using (Bitmap bitmap = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb))
+            WriteLog(Interval + " ms elapsed.");
+            // Comprobar si existe programa en Archivos de programa .x86
+            if (!IsProgramInstalled("SpreadWork"))
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
-                {
-                    g.CopyFromScreen(Point.Empty, Point.Empty, bounds.Size);
-                }
-                bitmap.Save("test.jpg", ImageFormat.Jpeg);
+                WriteLog("Programa SpreadWork no instalado.");
             }
-            */
-            var screen = System.Windows.Forms.Screen.PrimaryScreen;
-            var rect = screen.Bounds;
-            var size = rect.Size;
+            else
+            {
+                // Comprobar si programa arrancado 
+                if (!IsProgramRunning("SpreadWorkDesktop"))
+                {
+                    WriteLog("Programa SpreadWorkDesktop no esta en ejecución.");
+                    // Arrancar programa
+                    if (File.Exists("C:\\Program Files (x86)\\SpreadWork\\SpreadWorkDesktop.exe"))
+                    {
+                        WriteLog("Intentando arrancar SpreadWorkDesktop.");
+                        try
+                        {
+                            System.Diagnostics.Process.Start("C:\\Program Files (x86)\\SpreadWork\\SpreadWorkDesktop.exe");
+                        }
+                        catch (Exception ex) {
+                            WriteLog("No puedo arrancar el programa C:\\Program Files (x86)\\SpreadWork\\SpreadWorkDesktop.exe : " + ex.Message);
+                        }
+                    }
+                    else {
+                        WriteLog("El programa  no está en C:\\Program Files (x86)\\SpreadWork\\SpreadWorkDesktop.exe");
+                    }
 
-            Bitmap bmpScreenshot = new Bitmap(size.Width, size.Height);
-            Graphics g = Graphics.FromImage(bmpScreenshot);
-            g.CopyFromScreen(0, 0, 0, 0, size);
-            bmpScreenshot.Save("test.jpg", ImageFormat.Jpeg);
-
+                }
+            }
 
             // Inicializa Timer
             WatchDog.Enabled = true;
@@ -75,29 +82,112 @@ namespace SpreadWork
 
         private void WriteLog(string logMessage, bool addTimeStamp = true)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory;
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
 
-            var filePath = String.Format("{0}\\{1}_{2}.txt",
-                path,
-                ServiceName,
-                DateTime.Now.ToString("yyyyMMdd", CultureInfo.CurrentCulture)
-                );
+            try
+            {
+                //var path = AppDomain.CurrentDomain.BaseDirectory;
+                var path = LocalPath;
+                if (!Directory.Exists(path))
+                {
+                    DirectoryInfo di = Directory.CreateDirectory(path);
+                    di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                }
 
-            if (addTimeStamp)
-                logMessage = String.Format("[{0}] - {1}",
-                    DateTime.Now.ToString("HH:mm:ss", CultureInfo.CurrentCulture),
-                    logMessage);
+                var filePath = String.Format("{0}\\{1}_{2}.txt",
+                    path,
+                    System.AppDomain.CurrentDomain.FriendlyName,
+                    DateTime.Now.ToString("yyyyMMdd", CultureInfo.CurrentCulture)
+                    );
 
-            File.AppendAllText(filePath, logMessage);
+                if (addTimeStamp)
+                    logMessage = String.Format("[{0}] - {1}",
+                        DateTime.Now.ToString("HH:mm:ss", CultureInfo.CurrentCulture),
+                        logMessage);
+
+
+                File.AppendAllText(filePath, logMessage);
+            }
+            catch (Exception e)
+            {
+                // do nothing
+                WriteLog("Exception writing log:" + e.ToString());
+            }
         }
-    
+
+        #region Search Program
+        public static bool IsProgramInstalled(string programName)
+        {
+            try
+            {
+                RegistryKey uninstallKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall");
+                if (uninstallKey != null)
+                {
+                    foreach (string subkeyName in uninstallKey.GetSubKeyNames())
+                    {
+                        RegistryKey subkey = uninstallKey.OpenSubKey(subkeyName);
+                        if (subkey != null)
+                        {
+                            string displayName = (string)subkey.GetValue("DisplayName");
+                            if (displayName == programName)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        
+        public static bool IsProgramRunning(string programName)
+        {
+           Process[] procesos = Process.GetProcessesByName(programName);
+           return procesos.Length > 0;
+        }
+
+            #endregion
+
+            #region Config
+            private void LoadProgramConfig()
+        {
+            // Leer todos los parámetros del fichero de configuración
+            ConfigurationManager.RefreshSection("appSettings");
+            cfgGlobal = ConfigurationManager.AppSettings;
+        }
+
+        private void SetProgramConfig()
+        {
+            //RemoteServer
+            RemotePath = cfgGlobal.Get("RemotePath");
+            LocalPath = cfgGlobal.Get("LocalPath");
+        }
+
+        #endregion
+
+
 
         protected override void OnStop()
         {
-            Timer.Stop();
-            WriteLog("Servicio SpreadWorkService detenido");
+            WatchDog.Stop();
+            WriteLog("Service SpreadWorkService stopped");
+            // Matar programa 
+
+            foreach (Process p in System.Diagnostics.Process.GetProcessesByName("SpreadWorkDesktop"))
+            {
+                try
+                {
+                    p.Kill();
+                    p.WaitForExit();
+                }
+                catch (Exception e) {
+                    WriteLog("I can't stop process SpreadWorkDesktop " + e.Message);
+                }
+            }
+
+
+
         }
     }
 }

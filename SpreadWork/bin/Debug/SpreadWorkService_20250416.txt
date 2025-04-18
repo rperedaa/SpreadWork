@@ -1,0 +1,1 @@
+[20:28:18] - 10000 ms elapsed.[20:28:18] - Programa SpreadWork no instalado.[20:28:24] - Servicio SpreadWorkService detenido
